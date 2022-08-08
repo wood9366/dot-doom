@@ -28,12 +28,21 @@
       doom-variable-pitch-font (font-spec :family "Source Code Pro" :size 13 :weight 'normal :width 'normal)
       doom-big-font (font-spec :family "Source Code Pro" :size 26 :weight 'normal :width 'normal))
 
+(add-hook! 'after-make-frame-functions #'setup-frame-chinese-font)
+
+(defun setup-frame-chinese-font(frame)
+  (when (display-graphic-p)
+    (dolist (charset '(kana han cjk-misc bopomofo))
+      (set-fontset-font (frame-parameter frame 'font)
+                        charset (font-spec :family "Hiragino Sans GB" :size 16)))))
+
 (defun setup-chinese-font()
   (interactive)
-  (if (display-graphic-p)
-      (dolist (charset '(kana han cjk-misc bopomofo))
-        (set-fontset-font (frame-parameter nil 'font)
-                          charset (font-spec :family "Hiragino Sans GB" :size 16)))))
+  (setup-frame-chinese-font nil))
+  ;; (if (display-graphic-p)
+  ;;     (dolist (charset '(kana han cjk-misc bopomofo))
+  ;;       (set-fontset-font (frame-parameter nil 'font)
+  ;;                         charset (font-spec :family "Hiragino Sans GB" :size 16)))))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -54,6 +63,10 @@
 (setq org-directory "~/org/")
 
 (add-to-list 'auto-mode-alist '("\\.inl\\'" . c-or-c++-mode))
+
+(add-hook! cc-mode
+           (setq-local tab-width 4
+                       c-basic-offset 4))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
