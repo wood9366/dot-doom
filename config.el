@@ -68,6 +68,18 @@
            (setq-local tab-width 4
                        c-basic-offset 4))
 
+;; (setq lsp-csharp-server-path "/Users/liyang/bin/omnisharp/omnisharp-osx-x64-net6.0/OmniSharp")
+(setq lsp-csharp-server-path "/Users/liyang/bin/omnisharp/omnisharp-osx/run")
+
+(after! lsp-mode
+  (setq lsp-lens-enable nil)
+  (setq lsp-enable-file-watchers nil))
+
+(after! lsp-ui
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-sideline-enable nil))
+
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
